@@ -57,6 +57,7 @@ public class MySQL implements Database
         return null;
     }
     
+    @Override
     public String getPassword(String username)
     {
         ResultSet rs = null;
@@ -82,6 +83,7 @@ public class MySQL implements Database
         return null;
     }
     
+    @Override
     public ArrayList<String> getBotList(String username)
     {
         ArrayList<String> bots = new ArrayList<String>();
@@ -108,6 +110,7 @@ public class MySQL implements Database
         return bots;
     }
 
+    @Override
     public Bot loadBot(BotArena master,ClientSocket socket,String name)
     {
         Bot bot = null;
@@ -134,6 +137,7 @@ public class MySQL implements Database
         return bot;
     }
 
+    @Override
     public ArrayList<Thing> loadMap()
     {
         ArrayList<Thing> things = new ArrayList<Thing>();

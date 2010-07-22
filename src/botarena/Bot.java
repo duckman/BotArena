@@ -28,21 +28,25 @@ public class Bot extends Thing
         position = new Point(x,y);
     }
 
+    @Override
     public String getName()
     {
         return name;
     }
 
+    @Override
     public Type getType()
     {
         return Type.BOT;
     }
 
+    @Override
     public Point getPosition()
     {
         return position;
     }
 
+    @Override
     public void setPosition(Point position)
     {
         this.position = position;

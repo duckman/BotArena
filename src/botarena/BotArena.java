@@ -50,6 +50,7 @@ public class BotArena implements Runnable
     }
     
     @SuppressWarnings("empty-statement")
+    @Override
     public void run()
     {
         new Thread(network).start();

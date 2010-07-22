@@ -14,7 +14,7 @@ import java.util.LinkedList;
  */
 public abstract class Thing
 {
-    protected LinkedList<Packet> packets = null;
+    private LinkedList<Packet> packets = null;
     
     Thing()
     {
@@ -46,6 +46,7 @@ public abstract class Thing
         
     }
 
+    @Override
     public String toString()
     {
         return getName()+":"+getType()+":"+getPosition();
