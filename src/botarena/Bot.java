@@ -57,7 +57,7 @@ public class Bot extends Thing
         {
             // 0 - direction
             case MOVE:
-                switch(Enum.valueOf(Direction.class, pkt.getPerameter().get(0)))
+                switch(Enum.valueOf(Direction.class, pkt.getParameter().get(0)))
                 {
                     case UP:
                         map.move(this, position.x, position.y+1);

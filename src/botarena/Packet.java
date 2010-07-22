@@ -29,7 +29,7 @@ public class Packet implements Serializable
         return cmd;
     }
     
-    public ArrayList<String> getPerameter()
+    public ArrayList<String> getParameter()
     {
         return peram;
     }

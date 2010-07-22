@@ -59,7 +59,7 @@ public class ClientSocket implements Runnable
             try
             {
                 Packet pkt = (Packet)in.readObject();
-                ArrayList<String> perams = pkt.getPerameter();
+                ArrayList<String> perams = pkt.getParameter();
                 switch(pkt.getCommand())
                 {
                     case AUTHENTICATE:
