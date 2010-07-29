@@ -3,16 +3,17 @@
  * and open the template in the editor.
  */
 
-package botarena;
+package botarena.util;
 
 /**
  *
  * @author lucashereld
  */
-public enum Type
+public enum Command
 {
-    BOT,
-    OBSTACLE,
-    PROJECTILE,
-    WALL,
+    AUTHENTICATE,
+    LOGIN,
+    VIEW,
+    MOVE,
+    CAST
 }

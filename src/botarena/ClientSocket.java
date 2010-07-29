@@ -5,6 +5,9 @@
 
 package botarena;
 
+import botarena.util.Packet;
+import botarena.util.Command;
+import botarena.util.Debug;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;

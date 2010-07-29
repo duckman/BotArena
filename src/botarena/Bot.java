@@ -5,6 +5,11 @@
 
 package botarena;
 
+import botarena.util.Packet;
+import botarena.util.Command;
+import botarena.util.Direction;
+import botarena.util.Type;
+import botarena.util.Thing;
 import java.awt.Point;
 import java.util.ArrayList;
 
@@ -20,7 +25,7 @@ public class Bot extends Thing
     private Point position = null;
     private int radius = 5;
 
-    Bot(BotArena master,ClientSocket socket,String name,int x,int y)
+    public Bot(BotArena master,ClientSocket socket,String name,int x,int y)
     {
         this.master = master;
         this.socket = socket;
@@ -55,8 +60,6 @@ public class Bot extends Thing
     @Override
     protected void step(Packet pkt)
     {
-        Map map = master.getMap();
-
         switch(pkt.getCommand())
         {
             // 0 - direction
@@ -64,16 +67,16 @@ public class Bot extends Thing
                 switch(Enum.valueOf(Direction.class, pkt.getParameter().get(0)))
                 {
                     case UP:
-                        map.move(this, position.x, position.y+1);
+                        master.moveThing(this, position.x, position.y+1);
                         break;
                     case DOWN:
-                        map.move(this, position.x, position.y-1);
+                        master.moveThing(this, position.x, position.y-1);
                         break;
                     case LEFT:
-                        map.move(this, position.x-1, position.y);
+                        master.moveThing(this, position.x-1, position.y);
                         break;
                     case RIGHT:
-                        map.move(this, position.x+1, position.y);
+                        master.moveThing(this, position.x+1, position.y);
                         break;
                 }
                 break;
@@ -83,7 +86,7 @@ public class Bot extends Thing
                 break;
         }
 
-        ArrayList<Thing> things = map.getThings(position.x, position.y, radius);
+        ArrayList<Thing> things = master.getMap().getThings(position.x, position.y, radius);
         ArrayList<String> perams = new ArrayList<String>();
 
         for(int x=0;x<things.size();x++)

@@ -5,6 +5,9 @@
 
 package botarena;
 
+import botarena.util.Database;
+import botarena.util.Debug;
+import botarena.util.Thing;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.DriverManager;

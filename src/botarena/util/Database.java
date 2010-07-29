@@ -3,8 +3,11 @@
  * and open the template in the editor.
  */
 
-package botarena;
+package botarena.util;
 
+import botarena.Bot;
+import botarena.BotArena;
+import botarena.ClientSocket;
 import java.util.ArrayList;
 
 /**

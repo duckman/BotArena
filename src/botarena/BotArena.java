@@ -5,6 +5,9 @@
 
 package botarena;
 
+import botarena.util.Database;
+import botarena.util.Map;
+import botarena.util.Thing;
 import java.util.ArrayList;
 
 /**
@@ -19,7 +22,7 @@ public class BotArena implements Runnable
     private boolean running = false;
     private ArrayList<Thing> things = null;
     
-    BotArena()
+    public BotArena()
     {
         db = new MySQL("localhost","botarena","botarena","botarena");
         map = new BruteForceMap(this);
@@ -37,6 +40,20 @@ public class BotArena implements Runnable
     {
         things.remove(thing);
         map.removeThing(thing);
+    }
+
+    public boolean moveThing(Thing thing, int x, int y)
+    {
+        if(map.move(thing, x, y))
+        {
+            return true;
+        }
+        else
+        {
+            // collision
+        }
+
+        return true;
     }
 
     public Database getDB()

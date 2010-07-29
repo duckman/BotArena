@@ -5,6 +5,9 @@
 
 package botarena;
 
+import botarena.util.Database;
+import botarena.util.Map;
+import botarena.util.Thing;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;

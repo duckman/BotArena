@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package botarena;
+package botarena.util;
 
 import java.awt.Point;
 import java.util.LinkedList;
@@ -16,7 +16,7 @@ public abstract class Thing
 {
     private LinkedList<Packet> packets = null;
     
-    Thing()
+    public Thing()
     {
         packets = new LinkedList<Packet>();
     }

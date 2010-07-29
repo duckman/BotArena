@@ -3,7 +3,7 @@
  * and open the template in the editor.
  */
 
-package botarena;
+package botarena.util;
 
 import java.io.Serializable;
 import java.util.ArrayList;
