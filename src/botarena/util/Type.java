@@ -14,5 +14,5 @@ public enum Type
     BOT,
     OBSTACLE,
     PROJECTILE,
-    WALL,
+    WALL
 }

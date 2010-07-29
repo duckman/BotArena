@@ -24,6 +24,7 @@ public class Bot extends Thing
     private String name = null;
     private Point position = null;
     private int radius = 5;
+    private int hp = 100;
 
     public Bot(BotArena master,ClientSocket socket,String name,int x,int y)
     {
@@ -95,6 +96,28 @@ public class Bot extends Thing
         }
 
         socket.send(Command.VIEW, perams);
+    }
+
+    @Override
+    public boolean collideWith(Thing thing)
+    {
+        switch(thing.getType())
+        {
+            case BOT:
+            case OBSTACLE:
+            case WALL:
+                return false;
+            case PROJECTILE:
+                hp -= thing.damage(0);
+                if(hp <= 0)
+                {
+                    master.removeThing(this);
+                    master.respawnThing(this);
+                }
+                break;
+        }
+
+        return true;
     }
 
     @Override

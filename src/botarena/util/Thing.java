@@ -41,6 +41,13 @@ public abstract class Thing
     
     abstract protected void step(Packet pkt);
 
+    abstract public boolean collideWith(Thing thing);
+
+    public int damage(int dmg)
+    {
+        return 0;
+    }
+
     public void stop()
     {
         

@@ -11,6 +11,7 @@ import botarena.util.Thing;
 import java.awt.Point;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Random;
 
 /**
  *
@@ -20,11 +21,13 @@ public class BruteForceMap implements Map
 {
     private BotArena master = null;
     private HashMap<Point, Thing> things = null;
+    private Random rand = null;
 
     BruteForceMap(BotArena master)
     {
         this.master = master;
         things = new HashMap<Point, Thing>();
+        rand = new Random();
         load();
     }
 
@@ -45,6 +48,18 @@ public class BruteForceMap implements Map
     {
         things.put(new Point(x,y), thing);
         return true;
+    }
+
+    @Override
+    public Thing getThing(int x,int y)
+    {
+        return things.get(new Point(x,y));
+    }
+
+    @Override
+    public boolean exists(Thing thing)
+    {
+        return things.containsValue(thing);
     }
 
     @Override
@@ -91,5 +106,11 @@ public class BruteForceMap implements Map
         things.put(thing.getPosition(), thing);
         
         return true;
+    }
+
+    @Override
+    public Point randomPoint()
+    {
+        return new Point(rand.nextInt(),rand.nextInt());
     }
 }

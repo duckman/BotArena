@@ -5,6 +5,7 @@
 
 package botarena;
 
+import botarena.util.Collision;
 import botarena.util.Database;
 import botarena.util.Map;
 import botarena.util.Thing;
@@ -21,6 +22,7 @@ public class BotArena implements Runnable
     private NetworkListener network = null;
     private boolean running = false;
     private ArrayList<Thing> things = null;
+    private ArrayList<Collision> collisions = null;
     
     public BotArena()
     {
@@ -50,10 +52,16 @@ public class BotArena implements Runnable
         }
         else
         {
-            // collision
+            collisions.add(new Collision(thing,x,y));
         }
 
         return true;
+    }
+
+    public void respawnThing(Thing thing)
+    {
+        thing.setPosition(map.randomPoint());
+        addThing(thing);
     }
 
     public Database getDB()
@@ -77,10 +85,32 @@ public class BotArena implements Runnable
             
             try
             {
+                collisions = new ArrayList<Collision>();
                 for(int x=0;x<things.size();x++)
                 {
                     things.get(x).step();
                 }
+
+                // handle collisions
+                for(int x=0;x<collisions.size();x++)
+                {
+                    Collision collision = collisions.get(x);
+
+                    // could have been removed by another Thing
+                    if(map.exists(collision.getThing()))
+                    {
+                        // make sure there is still a conflict
+                        if(!moveThing(collision.getThing(),collision.getX(),collision.getY()))
+                        {
+                            if(collision.getThing().collideWith(map.getThing(x, x)))
+                            {
+                                moveThing(collision.getThing(),collision.getX(),collision.getY());
+                            }
+                        }
+                    }
+                }
+                collisions = null;
+
                 Thread.sleep(16 - (System.currentTimeMillis() - start));
             }
             catch(InterruptedException ex)
