@@ -15,6 +15,7 @@ import java.util.LinkedList;
 public abstract class Thing
 {
     private LinkedList<Packet> packets = null;
+    private Point position = null;
     
     public Thing()
     {
@@ -25,9 +26,15 @@ public abstract class Thing
 
     abstract public Type getType();
 
-    abstract public Point getPosition();
+    public Point getPosition()
+    {
+        return position;
+    }
 
-    abstract public void setPosition(Point position);
+    public void setPosition(Point position)
+    {
+        this.position = position;
+    }
     
     public void addPacket(Packet pkt)
     {

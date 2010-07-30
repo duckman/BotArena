@@ -22,7 +22,6 @@ public class Bot extends Thing
     private BotArena master = null;
     private ClientSocket socket = null;
     private String name = null;
-    private Point position = null;
     private int radius = 5;
     private int hp = 100;
 
@@ -31,7 +30,7 @@ public class Bot extends Thing
         this.master = master;
         this.socket = socket;
         this.name = name;
-        position = new Point(x,y);
+        setPosition(new Point(x,y));
     }
 
     @Override
@@ -47,18 +46,6 @@ public class Bot extends Thing
     }
 
     @Override
-    public Point getPosition()
-    {
-        return position;
-    }
-
-    @Override
-    public void setPosition(Point position)
-    {
-        this.position = position;
-    }
-
-    @Override
     protected void step(Packet pkt)
     {
         switch(pkt.getCommand())
@@ -68,26 +55,41 @@ public class Bot extends Thing
                 switch(Enum.valueOf(Direction.class, pkt.getParameter().get(0)))
                 {
                     case UP:
-                        master.moveThing(this, position.x, position.y+1);
+                        master.moveThing(this, getPosition().x, getPosition().y+1);
                         break;
                     case DOWN:
-                        master.moveThing(this, position.x, position.y-1);
+                        master.moveThing(this, getPosition().x, getPosition().y-1);
                         break;
                     case LEFT:
-                        master.moveThing(this, position.x-1, position.y);
+                        master.moveThing(this, getPosition().x-1, getPosition().y);
                         break;
                     case RIGHT:
-                        master.moveThing(this, position.x+1, position.y);
+                        master.moveThing(this, getPosition().x+1, getPosition().y);
                         break;
                 }
                 break;
             // 0 - spell
             // 1 - direction
             case CAST:
+                switch(Enum.valueOf(Direction.class, pkt.getParameter().get(1)))
+                {
+                    case UP:
+                        master.addThing(new Projectile(master,"Bullet",10,Direction.UP,getPosition().x, getPosition().y+1));
+                        break;
+                    case DOWN:
+                        master.addThing(new Projectile(master,"Bullet",10,Direction.DOWN,getPosition().x, getPosition().y-1));
+                        break;
+                    case LEFT:
+                        master.addThing(new Projectile(master,"Bullet",10,Direction.LEFT,getPosition().x-1, getPosition().y));
+                        break;
+                    case RIGHT:
+                        master.addThing(new Projectile(master,"Bullet",10,Direction.RIGHT,getPosition().x+1, getPosition().y));
+                        break;
+                }
                 break;
         }
 
-        ArrayList<Thing> things = master.getMap().getThings(position.x, position.y, radius);
+        ArrayList<Thing> things = master.getMap().getThings(getPosition().x, getPosition().y, radius);
         ArrayList<String> perams = new ArrayList<String>();
 
         for(int x=0;x<things.size();x++)
