@@ -10,7 +10,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author lucashereld
+ * @author Lucas Hereld <duckman@piratehook.com>
  */
 public class Packet implements Serializable
 {

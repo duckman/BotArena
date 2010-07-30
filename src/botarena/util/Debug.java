@@ -7,7 +7,7 @@ package botarena.util;
 
 /**
  *
- * @author lucashereld
+ * @author Lucas Hereld <duckman@piratehook.com>
  */
 public class Debug
 {

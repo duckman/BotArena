@@ -13,7 +13,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author lucashereld
+ * @author Lucas Hereld <duckman@piratehook.com>
  */
 public class BotArena implements Runnable
 {

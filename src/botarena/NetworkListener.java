@@ -11,7 +11,7 @@ import java.net.SocketException;
 
 /**
  *
- * @author lucashereld
+ * @author Lucas Hereld <duckman@piratehook.com>
  */
 public class NetworkListener implements Runnable
 {

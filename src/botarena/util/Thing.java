@@ -10,7 +10,7 @@ import java.util.LinkedList;
 
 /**
  *
- * @author lucashereld
+ * @author Lucas Hereld <duckman@piratehook.com>
  */
 public abstract class Thing
 {

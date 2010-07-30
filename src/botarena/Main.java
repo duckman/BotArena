@@ -7,7 +7,7 @@ package botarena;
 
 /**
  *
- * @author lucashereld
+ * @author Lucas Hereld <duckman@piratehook.com>
  */
 public class Main
 {

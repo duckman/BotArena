@@ -9,7 +9,7 @@ import java.util.Random;
 
 /**
  *
- * @author lucashereld
+ * @author Lucas Hereld <duckman@piratehook.com>
  */
 public enum Direction
 {
