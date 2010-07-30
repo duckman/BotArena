@@ -15,5 +15,5 @@ public enum Command
     LOGIN,
     VIEW,
     MOVE,
-    CAST
+    FIRE
 }

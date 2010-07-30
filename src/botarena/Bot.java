@@ -70,7 +70,7 @@ public class Bot extends Thing
                 break;
             // 0 - spell
             // 1 - direction
-            case CAST:
+            case FIRE:
                 switch(Enum.valueOf(Direction.class, pkt.getParameter().get(1)))
                 {
                     case UP:
