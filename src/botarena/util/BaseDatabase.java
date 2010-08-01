@@ -173,4 +173,41 @@ public abstract class BaseDatabase implements Database
 
         return things;
     }
+    
+    /*
+     * We should call this if the Database hasn't been created.
+     * 
+     */
+    public void createTables()
+    {
+    	String query =
+    		"CREATE TABLE user (" +
+    		"	username varchar(16) primary key," +
+    		"	password varchar(16)," +
+    		"	uid int" +
+    		");" +
+    		"CREATE TABLE thing (" +
+    		"	tid int primary key," +
+    		"	name varchar(16)," +
+    		"	type varchar(16)," +
+    		"	x int," +
+    		"	y int" +
+    		");" + 
+    		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
+    		"( 1000, 'Tree1', 'OBSTACLE', 3, 3 );" +
+    		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
+    		"( 1001, 'Wall1', 'WALL', 0, 2 );" +
+    		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
+    		"( 1002, 'Wall2', 'WALL', 1, 2 );" +
+    		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
+    		"( 1003, 'Wall3', 'WALL', 2, 2 );" +
+    		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
+    		"( 1004, 'Wall4', 'WALL', 3, 2 );" +
+    		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
+    		"( 1005, 'Wall5', 'WALL', 4, 2 );" +
+    		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
+    		"( 1006, 'Wall6', 'WALL', 5, 2 );";
+    	
+		execute(query);
+    }
 }
