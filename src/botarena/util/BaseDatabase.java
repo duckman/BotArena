@@ -193,6 +193,8 @@ public abstract class BaseDatabase implements Database
     		"	x int," +
     		"	y int" +
     		");" + 
+    		"INSERT INTO user ( username, password, uid ) VALUES" +
+    		"( 'test', 'test', 0 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
     		"( 1000, 'Tree1', 'OBSTACLE', 3, 3 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
