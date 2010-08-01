@@ -188,27 +188,30 @@ public abstract class BaseDatabase implements Database
     		");" +
     		"CREATE TABLE thing (" +
     		"	tid int primary key," +
+    		"	username varchar(16)," +
     		"	name varchar(16)," +
     		"	type varchar(16)," +
     		"	x int," +
     		"	y int" +
     		");" + 
     		"INSERT INTO user ( username, password, uid ) VALUES" +
-    		"( 'test', 'test', 0 );" +
+    		"( 'map', 'map', 0 );" +
+    		"INSERT INTO user ( username, password, uid ) VALUES" +
+    		"( 'test', 'test', 1 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-    		"( 1000, 'Tree1', 'OBSTACLE', 3, 3 );" +
+    		"( 1000, 'map', 'Tree1', 'OBSTACLE', 3, 3 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-    		"( 1001, 'Wall1', 'WALL', 0, 2 );" +
+    		"( 1001, 'map', 'Wall1', 'WALL', 0, 2 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-    		"( 1002, 'Wall2', 'WALL', 1, 2 );" +
+    		"( 1002, 'map', 'Wall2', 'WALL', 1, 2 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-    		"( 1003, 'Wall3', 'WALL', 2, 2 );" +
+    		"( 1003, 'map', 'Wall3', 'WALL', 2, 2 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-    		"( 1004, 'Wall4', 'WALL', 3, 2 );" +
+    		"( 1004, 'map', 'Wall4', 'WALL', 3, 2 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-    		"( 1005, 'Wall5', 'WALL', 4, 2 );" +
+    		"( 1005, 'map', 'Wall5', 'WALL', 4, 2 );" +
     		"INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-    		"( 1006, 'Wall6', 'WALL', 5, 2 );";
+    		"( 1006, 'map', 'Wall6', 'WALL', 5, 2 );";
     	
 		execute(query);
     }
