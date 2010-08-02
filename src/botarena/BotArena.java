@@ -26,8 +26,8 @@ public class BotArena implements Runnable
     
     public BotArena()
     {
-        //db = new MySQL("localhost","botarena","botarena","botarena");
-    	db = new SQLite("localhost","botarena","botarena","botarena");
+        db = new MySQL("localhost","botarena","botarena","botarena");
+    	//db = new SQLite("localhost","botarena","botarena","botarena");
         map = new BruteForceMap(this);
         network = new NetworkListener(this);
         things = new ArrayList<Thing>();
