@@ -71,7 +71,7 @@ public abstract class BaseDatabase implements Database
         
         try
         {
-            if(rs.next())
+            if(rs.first())
             {
                 return rs.getString("password");
             }
@@ -98,7 +98,7 @@ public abstract class BaseDatabase implements Database
         
         try
         {
-            if(rs.next())
+            if(rs.first())
             {
                 do
                 {
@@ -125,7 +125,7 @@ public abstract class BaseDatabase implements Database
 
         try
         {
-            if(rs.next())
+            if(rs.first())
             {
                 do
                 {
@@ -152,7 +152,7 @@ public abstract class BaseDatabase implements Database
 
 //        try
 //        {
-//            if(rs.next())
+//            if(rs.first())
 //            {
 //                String type = null;
 //                do
