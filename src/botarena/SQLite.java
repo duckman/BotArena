@@ -12,13 +12,13 @@ import java.sql.SQLException;
 
 /**
  *
- * @author Lucas Hereld <duckman@piratehook.com>
+ * @author jtwb
  */
-public class MySQL extends BaseDatabase
+public class SQLite extends BaseDatabase
 {
     Connection conn = null;
     
-    public MySQL(String host,String database,String username,String password)
+    public SQLite(String host,String database,String username,String password)
     {
     	super(host, database, username, password);
     }
@@ -26,8 +26,10 @@ public class MySQL extends BaseDatabase
 	protected Connection getConnection(String host, String database, String username,
 			String password) throws InstantiationException,
 			IllegalAccessException, ClassNotFoundException, SQLException {
-		Class.forName("com.mysql.jdbc.Driver").newInstance();
-		return DriverManager.getConnection("jdbc:mysql://"+host+"/"+database+"?user="+username+"&password="+password);
+		String curDir = System.getProperty("user.dir");
+		System.out.println("Current working dir = " + curDir);
+		Class.forName("org.sqlite.JDBC").newInstance();
+		return DriverManager.getConnection("jdbc:sqlite:resource/"+database+".db");
 	}
     
 }

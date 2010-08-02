@@ -9,7 +9,7 @@ package botarena;
  *
  * @author Lucas Hereld <duckman@piratehook.com>
  */
-public class Main
+public class BotArenaMainSQLite
 {
     /**
      * @param args the command line arguments
