@@ -1,0 +1,6 @@
+// Database
+dbEngine = MySQL
+dbHost = localhost
+dbUser = botarena
+dbPassword = borarena
+dbDB = botarena

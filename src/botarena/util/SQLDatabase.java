@@ -18,11 +18,11 @@ import java.util.ArrayList;
  *
  * @author Lucas Hereld <duckman@piratehook.com>
  */
-public abstract class BaseDatabase implements Database
+public abstract class SQLDatabase implements Database
 {
     Connection conn = null;
     
-    public BaseDatabase(String host,String database,String username,String password)
+    public void setup(String host,String database,String username,String password)
     {
         try
         {
@@ -41,9 +41,9 @@ public abstract class BaseDatabase implements Database
         }
     }
 
-	protected abstract Connection getConnection(String host, String database, String username,
-			String password) throws InstantiationException,
-			IllegalAccessException, ClassNotFoundException, SQLException;
+    protected abstract Connection getConnection(String host, String database, String username,
+                    String password) throws InstantiationException,
+                    IllegalAccessException, ClassNotFoundException, SQLException;
     
     protected ResultSet execute(String query)
     {

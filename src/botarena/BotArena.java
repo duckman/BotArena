@@ -7,9 +7,12 @@ package botarena;
 
 import botarena.util.Collision;
 import botarena.util.Database;
+import botarena.util.Debug;
 import botarena.util.Map;
 import botarena.util.Thing;
 import java.util.ArrayList;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  *
@@ -26,8 +29,27 @@ public class BotArena implements Runnable
     
     public BotArena()
     {
-        db = new MySQL("localhost","botarena","botarena","botarena");
-    	//db = new SQLite("localhost","botarena","botarena","botarena");
+        try
+        {
+            db = (Database)Class.forName(Config.getConfig("dbEngine")).newInstance();
+            db.setup(Config.getConfig("dbHost"),
+                    Config.getConfig("dbUser"),
+                    Config.getConfig("dbPassword"),
+                    Config.getConfig("dbDB"));
+        }
+        catch(ClassNotFoundException ex)
+        {
+            // should prollyy throw a custom exception
+            Debug.printex(ex);
+        }
+        catch (InstantiationException ex)
+        {
+            Logger.getLogger(BotArena.class.getName()).log(Level.SEVERE, null, ex);
+        }
+        catch (IllegalAccessException ex)
+        {
+            Logger.getLogger(BotArena.class.getName()).log(Level.SEVERE, null, ex);
+        }
         map = new BruteForceMap(this);
         network = new NetworkListener(this);
         things = new ArrayList<Thing>();

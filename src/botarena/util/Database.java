@@ -16,6 +16,8 @@ import java.util.ArrayList;
  */
 public interface Database
 {
+    public void setup(String host,String user,String password,String database);
+
     public String getPassword(String username);
     
     public ArrayList<String> getBotList(String username);

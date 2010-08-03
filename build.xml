@@ -71,4 +71,7 @@
     nbproject/build-impl.xml file. 
 
     -->
+    <target name="-post-jar">
+        <copy file="config.conf.dist" todir="dist"/>
+    </target>
 </project>
