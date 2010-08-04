@@ -6,7 +6,8 @@
 package botarena;
 
 /**
- *
+ * Listens for a shutdown and tells the BotArena to shutdown properly
+ * 
  * @author Lucas Hereld <duckman@piratehook.com>
  */
 public class ShutdownListener extends Thread

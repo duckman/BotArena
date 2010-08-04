@@ -13,6 +13,7 @@ import java.io.IOException;
 import java.util.HashMap;
 
 /**
+ * A class representing the server's configuration
  *
  * @author Lucas Hereld <duckman@piratehook.com>
  */
@@ -21,7 +22,10 @@ public class Config
     private static boolean loaded = false;
     private static HashMap<String, String> conf;
 
-    public static void load()
+    /**
+     * Reads config.conf or loads the defaults into the class
+     */
+    private static void load()
     {
         conf = new HashMap<String, String>();
 
@@ -66,6 +70,12 @@ public class Config
         }
     }
 
+    /**
+     * Retrieves a configuration from the list
+     *
+     * @param key The variable your looking for
+     * @return The configuration your looking for
+     */
     public static String getConfig(String key)
     {
         isLoaded();

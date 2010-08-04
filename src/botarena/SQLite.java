@@ -11,13 +11,28 @@ import java.sql.DriverManager;
 import java.sql.SQLException;
 
 /**
- *
+ * A SQLite implementation of the Database
+ * 
  * @author jtwb
  */
 public class SQLite extends SQLDatabase
 {
     Connection conn = null;
     
+    /**
+     * Sets it up
+     *
+     * @param host Not used
+     * @param database The database to be used
+     * @param username Not used
+     * @param password Not used
+     * @return Returns the Connection made
+     * @throws InstantiationException
+     * @throws IllegalAccessException
+     * @throws ClassNotFoundException
+     * @throws SQLException
+     */
+    @Override
     protected Connection getConnection(String host, String database, String username,
                     String password) throws InstantiationException,
                     IllegalAccessException, ClassNotFoundException, SQLException {

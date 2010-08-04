@@ -10,6 +10,8 @@ import java.net.ServerSocket;
 import java.net.SocketException;
 
 /**
+ * The main network thread that watches for new connections from clients and
+ * creates the necessary ClientSocket when one come in.
  *
  * @author Lucas Hereld <duckman@piratehook.com>
  */
@@ -56,6 +58,9 @@ public class NetworkListener implements Runnable
         }
     }
 
+    /**
+     * Nicely stops the Thread for a clean shutdown
+     */
     public void stop()
     {
         running = false;

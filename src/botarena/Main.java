@@ -6,7 +6,8 @@
 package botarena;
 
 /**
- *
+ * Main! Where it all starts!
+ * 
  * @author Lucas Hereld <duckman@piratehook.com>
  */
 public class Main

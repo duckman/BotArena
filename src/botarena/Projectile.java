@@ -12,6 +12,7 @@ import botarena.util.Type;
 import java.awt.Point;
 
 /**
+ * Represents a Projectile fired from a Bot or anything else that can fire.
  *
  * @author Lucas Hereld <duckman@piratehook.com>
  */
@@ -22,6 +23,16 @@ public class Projectile extends Thing
     private int dmg = 0;
     private Direction direction;
 
+    /**
+     * Constructor...
+     *
+     * @param master The master BotArena
+     * @param name The name of the Bot
+     * @param dmg The amount of damage done by the projectile
+     * @param direction The Direction the projectile is going
+     * @param x x coordinate of initial position
+     * @param y y coordinate of initial position
+     */
     public Projectile(BotArena master,String name,int dmg,Direction direction,int x,int y)
     {
         this.master = master;
@@ -31,6 +42,12 @@ public class Projectile extends Thing
         setPosition(new Point(x,y));
     }
 
+    /**
+     * handle when the Projectile runs into something
+     *
+     * @param thing The Thing it's running into
+     * @return returns true if it still can move, otherwise false
+     */
     @Override
     public boolean collideWith(Thing thing)
     {
@@ -40,18 +57,33 @@ public class Projectile extends Thing
         return false;
     }
 
+    /**
+     * Getter function to retrieve the Projectile's name
+     *
+     * @return The Projectile's name
+     */
     @Override
     public String getName()
     {
         return name;
     }
 
+    /**
+     * Getter function to retrieve the Projectile's Type... which is BOT
+     *
+     * @return Type.PROJCTILE
+     */
     @Override
     public Type getType()
     {
         return Type.PROJECTILE;
     }
 
+    /**
+     * Makes the Projectile do what it does, which is just move in its Direction
+     *
+     * @param pkt The Packet to be processed
+     */
     @Override
     protected void step(Packet pkt)
     {

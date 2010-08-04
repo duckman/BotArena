@@ -15,6 +15,8 @@ import java.net.Socket;
 import java.util.ArrayList;
 
 /**
+ * This is the network Thread for each connection from the clients. Should be
+ * for each bot.
  *
  * @author Lucas Hereld <duckman@piratehook.com>
  */
@@ -44,6 +46,14 @@ public class ClientSocket implements Runnable
         }
     }
 
+    /**
+     * Handles the authentication
+     *
+     * @param username The username
+     * @param password The password
+     * @return An ArrayList of Bot names if authentication worked,
+     * otherwise null
+     */
     public ArrayList<String> authenticate(String username, String password)
     {
         if(password.compareToIgnoreCase(master.getDB().getPassword(username)) == 0)
@@ -99,19 +109,27 @@ public class ClientSocket implements Runnable
         }
     }
 
+    /**
+     * Properly stop the Thread for a clean shutdown
+     */
     public void stop()
     {
         running = false;
         master.removeThing(bot);
     }
 
-    public void send(Command cmd,ArrayList<String> perams)
+    /**
+     * Sends a Packet to the client
+     * @param cmd Command to be sent
+     * @param params Parameters to be sent
+     */
+    public void send(Command cmd,ArrayList<String> params)
     {
         if(running && authenticated && bot == null)
         {
             try
             {
-                out.writeObject(new Packet(cmd,perams));
+                out.writeObject(new Packet(cmd,params));
             }
             catch(IOException ex)
             {

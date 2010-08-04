@@ -15,6 +15,8 @@ import java.util.logging.Level;
 import java.util.logging.Logger;
 
 /**
+ * The main game engine. Keeps track of whats going on and of what components
+ * are doing.
  *
  * @author Lucas Hereld <duckman@piratehook.com>
  */
@@ -27,15 +29,15 @@ public class BotArena implements Runnable
     private ArrayList<Thing> things = null;
     private ArrayList<Collision> collisions = null;
     
+    /**
+     * The constructor
+     */
     public BotArena()
     {
         try
         {
             db = (Database)Class.forName(Config.getConfig("dbEngine")).newInstance();
-            db.setup(Config.getConfig("dbHost"),
-                    Config.getConfig("dbUser"),
-                    Config.getConfig("dbPassword"),
-                    Config.getConfig("dbDB"));
+            db.setup();
         }
         catch(ClassNotFoundException ex)
         {
@@ -55,18 +57,38 @@ public class BotArena implements Runnable
         things = new ArrayList<Thing>();
     }
     
+    /**
+     * Add a Thing to the list. These are all the things, weather they are on
+     * the map or not.
+     *
+     * @param thing The Thing to be added
+     */
     public void addThing(Thing thing)
     {
         things.add(thing);
         map.addThing(thing.getPosition().x, thing.getPosition().y, thing);
     }
 
+    /**
+     * Remove a thing. It also make sure it is removed from the Map as well.
+     *
+     * @param thing The Thing to be removed
+     */
     public void removeThing(Thing thing)
     {
         things.remove(thing);
         map.removeThing(thing);
     }
 
+    /**
+     * Tells the map to move a Thing and also reports a collision if that
+     * happens.
+     *
+     * @param thing The Thing to move
+     * @param x The x coordinate of where to move it
+     * @param y The y coordinate of where to move it
+     * @return true if it moved, otherwise false
+     */
     public boolean moveThing(Thing thing, int x, int y)
     {
         if(map.move(thing, x, y))
@@ -81,17 +103,32 @@ public class BotArena implements Runnable
         return true;
     }
 
+    /**
+     * Takes a Thing and spawns it in a random place
+     *
+     * @param thing The Thing to respawn
+     */
     public void respawnThing(Thing thing)
     {
         thing.setPosition(map.randomPoint());
         addThing(thing);
     }
 
+    /**
+     * Getter for the Database
+     *
+     * @return The Database
+     */
     public Database getDB()
     {
         return db;
     }
 
+    /**
+     * Getter for the Map
+     *
+     * @return The Map
+     */
     public Map getMap()
     {
         return map;
@@ -144,6 +181,9 @@ public class BotArena implements Runnable
         }
     }
 
+    /**
+     * Stops all the threads running for a clean stop.
+     */
     public void stop()
     {
         network.stop();

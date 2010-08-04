@@ -14,6 +14,10 @@ import java.util.HashMap;
 import java.util.Random;
 
 /**
+ * This is not the intended Map class to be used for ever. The Map could be one
+ * of the most complicated parts of this program, so for now we are just making
+ * it work, normally with brute force methods :-P. A proper Map class will be
+ * written when the time comes.
  *
  * @author Lucas Hereld <duckman@piratehook.com>
  */
@@ -43,6 +47,14 @@ public class BruteForceMap implements Map
         }
     }
 
+    /**
+     * Add a Think to the map
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param thing the Thing
+     * @return true if nothing was in the way, false otherwise
+     */
     @Override
     public boolean addThing(int x,int y,Thing thing)
     {
@@ -50,24 +62,50 @@ public class BruteForceMap implements Map
         return true;
     }
 
+    /**
+     * Get what ever Thing is at a certain point
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @return the Thing or null if nothing is there
+     */
     @Override
     public Thing getThing(int x,int y)
     {
         return things.get(new Point(x,y));
     }
 
+    /**
+     * Checks if a Thing is on the map
+     *
+     * @param thing The Thing
+     * @return true if the Thing was found, false otherwise
+     */
     @Override
     public boolean exists(Thing thing)
     {
         return things.containsValue(thing);
     }
 
+    /**
+     * Remove a Thing from th map
+     *
+     * @param thing the Thing
+     */
     @Override
     public void removeThing(Thing thing)
     {
         things.remove(thing.getPosition());
     }
 
+    /**
+     * Gets a list of Things within a certain distance of a point
+     *
+     * @param x x coordinate
+     * @param y y coordinate
+     * @param distance The distance to look
+     * @return an ArrayList of Things
+     */
     @Override
     public ArrayList<Thing> getThings(int x,int y,int distance)
     {
@@ -90,6 +128,14 @@ public class BruteForceMap implements Map
         return things;
     }
     
+    /**
+     * Move a Thing to a new point
+     *
+     * @param thing the Thing
+     * @param x new x coordinate
+     * @param y new y coordinate
+     * @return returns true if nothing was in the new point, false otherwise
+     */
     @Override
     public boolean move(Thing thing,int x,int y)
     {
@@ -108,6 +154,11 @@ public class BruteForceMap implements Map
         return true;
     }
 
+    /**
+     * Generates a random Point that is within the bounds of the Map
+     *
+     * @return a random Point
+     */
     @Override
     public Point randomPoint()
     {
