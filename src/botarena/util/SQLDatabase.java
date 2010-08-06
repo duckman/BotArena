@@ -9,6 +9,7 @@ import botarena.Bot;
 import botarena.BotArena;
 import botarena.ClientSocket;
 import botarena.Config;
+import java.awt.Point;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -179,7 +180,7 @@ public abstract class SQLDatabase implements Database
             {
                 do
                 {
-                    bot = new Bot(master,socket,name,rs.getInt("x"),rs.getInt("y"));
+                    bot = new Bot(master,socket,name);
                 }
                 while(rs.next());
             }
@@ -198,33 +199,36 @@ public abstract class SQLDatabase implements Database
      * @return An ArrayList of Things that are on the Map
      */
     @Override
-    public ArrayList<Thing> loadMap()
+    public ArrayList<MapRow> loadMap()
     {
-        ArrayList<Thing> things = new ArrayList<Thing>();
+        ArrayList<MapRow> things = new ArrayList<MapRow>();
         ResultSet rs = null;
 
-        rs = execute("SELECT * FROM thing WHERE type!='BOT'");
+        execute("DELETE FROM map WHERE type = 'BOT' OR type = 'PROJECTILE'");
+        rs = execute("SELECT * FROM map");
 
-//        try
-//        {
-//            if(rs.next())
-//            {
-//                String type = null;
-//                do
-//                {
-//                    type = rs.getString("type");
-//                    if(type.compareToIgnoreCase("WALL") == 0)
-//                    {
-//                        things.add(new Wall(rs.getString("username"),rs.getString("name"),rs.getInt("x"),rs.getInt("y")));
-//                    }
-//                }
-//                while(rs.next());
-//            }
-//        }
-//        catch(SQLException ex)
-//        {
-//            Debug.printex(ex);
-//        }
+        try
+        {
+            if(rs.next())
+            {
+                do
+                {
+                    Thing thing = null;
+                    switch(Type.valueOf(rs.getString("type")))
+                    {
+                        case OBSTACLE:
+                            //thing = new Obstacle();
+                        case NPC:
+                            //thing = new NPC();
+                    }
+                }
+                while(rs.next());
+            }
+        }
+        catch(SQLException ex)
+        {
+            Debug.printex(ex);
+        }
 
         return things;
     }

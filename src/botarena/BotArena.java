@@ -8,8 +8,10 @@ package botarena;
 import botarena.util.Collision;
 import botarena.util.Database;
 import botarena.util.Debug;
+import botarena.util.Direction;
 import botarena.util.Map;
 import botarena.util.Thing;
+import java.awt.Point;
 import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -66,7 +68,29 @@ public class BotArena implements Runnable
     public void addThing(Thing thing)
     {
         things.add(thing);
-        map.addThing(thing.getPosition().x, thing.getPosition().y, thing);
+        map.addThing(map.randomPoint(), thing);
+    }
+
+    public void addThing(Thing host,Thing newThing,Direction direction)
+    {
+        Point position = map.getPosition(host);
+        switch(direction)
+        {
+            case UP:
+                position.translate(0, 1);
+                break;
+            case DOWN:
+                position.translate(0, -1);
+                break;
+            case LEFT:
+                position.translate(-1, 0);
+                break;
+            case RIGHT:
+                position.translate(1, 0);
+                break;
+        }
+        things.add(newThing);
+        map.addThing(position, newThing);
     }
 
     /**
@@ -89,15 +113,15 @@ public class BotArena implements Runnable
      * @param y The y coordinate of where to move it
      * @return true if it moved, otherwise false
      */
-    public boolean moveThing(Thing thing, int x, int y)
+    public boolean moveThing(Thing thing, Point newPostition)
     {
-        if(map.move(thing, x, y))
+        if(map.move(thing, newPostition))
         {
             return true;
         }
         else
         {
-            collisions.add(new Collision(thing,x,y));
+            collisions.add(new Collision(thing,newPostition));
         }
 
         return true;
@@ -110,7 +134,6 @@ public class BotArena implements Runnable
      */
     public void respawnThing(Thing thing)
     {
-        thing.setPosition(map.randomPoint());
         addThing(thing);
     }
 
@@ -160,11 +183,11 @@ public class BotArena implements Runnable
                     if(map.exists(collision.getThing()))
                     {
                         // make sure there is still a conflict
-                        if(!moveThing(collision.getThing(),collision.getX(),collision.getY()))
+                        if(!moveThing(collision.getThing(),collision.getPosition()))
                         {
-                            if(collision.getThing().collideWith(map.getThing(x, x)))
+                            if(collision.getThing().collideWith(map.getThing(collision.getPosition())))
                             {
-                                moveThing(collision.getThing(),collision.getX(),collision.getY());
+                                moveThing(collision.getThing(),collision.getPosition());
                             }
                         }
                     }

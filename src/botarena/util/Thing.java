@@ -5,7 +5,6 @@
 
 package botarena.util;
 
-import java.awt.Point;
 import java.util.LinkedList;
 
 /**
@@ -17,7 +16,7 @@ import java.util.LinkedList;
 public abstract class Thing
 {
     private LinkedList<Packet> packets = null;
-    private Point position = null;
+    private int guid = -1;
     
     /**
      * Initializes the Thing so it is ready to do what it will do
@@ -41,24 +40,14 @@ public abstract class Thing
      */
     abstract public Type getType();
 
-    /**
-     * Getter function to retrieve the Thing's current location in the Map
-     *
-     * @return The Thing's position
-     */
-    public Point getPosition()
+    public void setGuid(int guid)
     {
-        return position;
+        this.guid = guid;
     }
 
-    /**
-     * Setter for setting the Thing's current location in the Map
-     *
-     * @param position The new position
-     */
-    public void setPosition(Point position)
+    public int getGuid()
     {
-        this.position = position;
+        return guid;
     }
     
     /**
@@ -119,6 +108,6 @@ public abstract class Thing
     @Override
     public String toString()
     {
-        return getName()+":"+getType()+":"+getPosition();
+        return getName()+":"+getType();
     }
 }

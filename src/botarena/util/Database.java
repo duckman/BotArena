@@ -45,7 +45,7 @@ public interface Database
      * Loads the current Map from the database
      * @return an ArrayList of things present on the map
      */
-    public ArrayList<Thing> loadMap();
+    public ArrayList<MapRow> loadMap();
 
     /**
      * Loads the specified bot from the database and returns it

@@ -35,13 +35,12 @@ public class Bot extends Thing
      * @param x x coordinate of initial position
      * @param y y coordinate of initial position
      */
-    public Bot(BotArena master,ClientSocket socket,String name,int x,int y)
+    public Bot(BotArena master,ClientSocket socket,String name)
     {
         super();
         this.master = master;
         this.socket = socket;
         this.name = name;
-        setPosition(new Point(x,y));
     }
 
     /**
@@ -78,44 +77,34 @@ public class Bot extends Thing
         {
             // 0 - direction
             case MOVE:
+                Point position = master.getMap().getPosition(this);
                 switch(Enum.valueOf(Direction.class, pkt.getParameter().get(0)))
                 {
                     case UP:
-                        master.moveThing(this, getPosition().x, getPosition().y+1);
+                        position.translate(0, 1);
                         break;
                     case DOWN:
-                        master.moveThing(this, getPosition().x, getPosition().y-1);
+                        position.translate(0, -1);
                         break;
                     case LEFT:
-                        master.moveThing(this, getPosition().x-1, getPosition().y);
+                        position.translate(-1, 0);
                         break;
                     case RIGHT:
-                        master.moveThing(this, getPosition().x+1, getPosition().y);
+                        position.translate(1, 0);
                         break;
                 }
+                master.moveThing(this, position);
                 break;
             // 0 - spell
             // 1 - direction
             case FIRE:
-                switch(Enum.valueOf(Direction.class, pkt.getParameter().get(1)))
-                {
-                    case UP:
-                        master.addThing(new Projectile(master,"Bullet",10,Direction.UP,getPosition().x, getPosition().y+1));
-                        break;
-                    case DOWN:
-                        master.addThing(new Projectile(master,"Bullet",10,Direction.DOWN,getPosition().x, getPosition().y-1));
-                        break;
-                    case LEFT:
-                        master.addThing(new Projectile(master,"Bullet",10,Direction.LEFT,getPosition().x-1, getPosition().y));
-                        break;
-                    case RIGHT:
-                        master.addThing(new Projectile(master,"Bullet",10,Direction.RIGHT,getPosition().x+1, getPosition().y));
-                        break;
-                }
+                Direction direction = Enum.valueOf(Direction.class, pkt.getParameter().get(1));
+                
+                master.addThing(this,new Projectile(master,"Bullet",10,direction),direction);
                 break;
         }
 
-        ArrayList<Thing> things = master.getMap().getThings(getPosition().x, getPosition().y, radius);
+        ArrayList<Thing> things = master.getMap().getThings(master.getMap().getPosition(this), radius);
         ArrayList<String> perams = new ArrayList<String>();
 
         for(int x=0;x<things.size();x++)

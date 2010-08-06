@@ -33,13 +33,12 @@ public class Projectile extends Thing
      * @param x x coordinate of initial position
      * @param y y coordinate of initial position
      */
-    public Projectile(BotArena master,String name,int dmg,Direction direction,int x,int y)
+    public Projectile(BotArena master,String name,int dmg,Direction direction)
     {
         this.master = master;
         this.name = name;
         this.dmg = dmg;
         this.direction = direction;
-        setPosition(new Point(x,y));
     }
 
     /**
@@ -87,21 +86,23 @@ public class Projectile extends Thing
     @Override
     protected void step(Packet pkt)
     {
+        Point position = master.getMap().getPosition(this);
         switch(direction)
         {
             case UP:
-                master.moveThing(this, getPosition().x, getPosition().y+1);
+                position.translate(0, 1);
                 break;
             case DOWN:
-                master.moveThing(this, getPosition().x, getPosition().y-1);
+                position.translate(0, -1);
                 break;
             case LEFT:
-                master.moveThing(this, getPosition().x-1, getPosition().y);
+                position.translate(-1, 0);
                 break;
             case RIGHT:
-                master.moveThing(this, getPosition().x+1, getPosition().y);
+                position.translate(1, 0);
                 break;
         }
+        master.moveThing(this, position);
     }
 
 

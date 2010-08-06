@@ -24,7 +24,7 @@ public interface Map
      * @param thing the Thing
      * @return true if nothing was in the way, false otherwise
      */
-    public boolean addThing(int x,int y,Thing thing);
+    public boolean addThing(Point postion,Thing thing);
 
     /**
      * Get what ever Thing is at a certain point
@@ -33,7 +33,9 @@ public interface Map
      * @param y y coordinate
      * @return the Thing or null if nothing is there
      */
-    public Thing getThing(int x,int y);
+    public Thing getThing(Point position);
+
+    public Point getPosition(Thing thing);
 
     /**
      * Checks if a Thing is on the map
@@ -51,7 +53,7 @@ public interface Map
      * @param distance The distance to look
      * @return an ArrayList of Things
      */
-    public ArrayList<Thing> getThings(int x,int y,int distance);
+    public ArrayList<Thing> getThings(Point postion,int distance);
 
     /**
      * Remove a Thing from th map
@@ -68,7 +70,7 @@ public interface Map
      * @param y new y coordinate
      * @return returns true if nothing was in the new point, false otherwise
      */
-    public boolean move(Thing thing,int x,int y);
+    public boolean move(Thing thing,Point postion);
 
     /**
      * Generates a random Point that is within the bounds of the Map
@@ -76,4 +78,9 @@ public interface Map
      * @return a random Point
      */
     public Point randomPoint();
+
+    /**
+     *
+     */
+    public int generateGuid();
 }

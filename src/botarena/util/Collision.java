@@ -5,6 +5,8 @@
 
 package botarena.util;
 
+import java.awt.Point;
+
 /**
  * Used to keep track of a collision on the map.
  *
@@ -13,8 +15,7 @@ package botarena.util;
 public class Collision
 {
     private Thing thing = null;
-    private int x;
-    private int y;
+    private Point position;
 
     /**
      *
@@ -23,11 +24,9 @@ public class Collision
      * @param x the x coordinate it was trying to go to
      * @param y the y coordinate it was trying to go to
      */
-    public Collision(Thing thing,int x,int y)
+    public Collision(Thing thing,Point position)
     {
         this.thing = thing;
-        this.x = x;
-        this.y = y;
     }
 
     /**
@@ -40,23 +39,8 @@ public class Collision
         return thing;
     }
 
-    /**
-     * Getter for the x coordinate
-     *
-     * @return the x
-     */
-    public int getX()
+    public Point getPosition()
     {
-        return x;
-    }
-
-    /**
-     * Getter for the y coordinate
-     *
-     * @return the y
-     */
-    public int getY()
-    {
-        return y;
+        return position;
     }
 }

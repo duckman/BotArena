@@ -7,6 +7,7 @@ package botarena;
 
 import botarena.util.Database;
 import botarena.util.Map;
+import botarena.util.MapRow;
 import botarena.util.Thing;
 import java.awt.Point;
 import java.util.ArrayList;
@@ -24,17 +25,22 @@ import java.util.Random;
 public class BruteForceMap implements Map
 {
     private BotArena master = null;
-    private HashMap<Point, Thing> things = null;
+    private HashMap<Integer, Thing> guidToThing = null;
+    private HashMap<Integer, Point> guidToPoint = null;
+    private HashMap<Point, Thing> pointToThing = null;
     private Random rand = null;
     private int upperBound = 0;
     private int lowerBound = 0;
     private int leftBound = 0;
     private int rightBound = 0;
+    private int nextGuid = 0;
 
     BruteForceMap(BotArena master)
     {
         this.master = master;
-        things = new HashMap<Point, Thing>();
+        guidToThing = new HashMap<Integer, Thing>();
+        guidToPoint = new HashMap<Integer, Point>();
+        pointToThing = new HashMap<Point, Thing>();
         rand = new Random();
         load();
     }
@@ -43,12 +49,15 @@ public class BruteForceMap implements Map
     {
         Database db = master.getDB();
 
-        ArrayList<Thing> things = db.loadMap();
+        ArrayList<MapRow> list = db.loadMap();
 
-        for(int x=0;x<things.size();x++)
+        for(int x=0;x<list.size();x++)
         {
-            updateBounds(things.get(x).getPosition());
-            this.things.put(things.get(x).getPosition(), things.get(x));
+            updateBounds(list.get(x).getPosition());
+            guidToThing.put(list.get(x).getGuid(), list.get(x).getThing());
+            guidToPoint.put(list.get(x).getGuid(), list.get(x).getPosition());
+            pointToThing.put(list.get(x).getPosition(), list.get(x).getThing());
+            nextGuid = list.get(x).getGuid() + 1;
         }
     }
 
@@ -61,10 +70,13 @@ public class BruteForceMap implements Map
      * @return true if nothing was in the way, false otherwise
      */
     @Override
-    public boolean addThing(int x,int y,Thing thing)
+    public boolean addThing(Point position,Thing thing)
     {
-        updateBounds(new Point(x,y));
-        things.put(new Point(x,y), thing);
+        thing.setGuid(generateGuid());
+        updateBounds(position);
+        guidToThing.put(thing.getGuid(), thing);
+        guidToPoint.put(thing.getGuid(), position);
+        pointToThing.put(position, thing);
         return true;
     }
 
@@ -76,9 +88,15 @@ public class BruteForceMap implements Map
      * @return the Thing or null if nothing is there
      */
     @Override
-    public Thing getThing(int x,int y)
+    public Thing getThing(Point postion)
     {
-        return things.get(new Point(x,y));
+        return pointToThing.get(postion);
+    }
+
+    @Override
+    public Point getPosition(Thing thing)
+    {
+        return guidToPoint.get(thing.getGuid());
     }
 
     /**
@@ -90,7 +108,7 @@ public class BruteForceMap implements Map
     @Override
     public boolean exists(Thing thing)
     {
-        return things.containsValue(thing);
+        return guidToThing.containsValue(thing);
     }
 
     /**
@@ -101,7 +119,9 @@ public class BruteForceMap implements Map
     @Override
     public void removeThing(Thing thing)
     {
-        things.remove(thing.getPosition());
+        int guid = thing.getGuid();
+        guidToThing.remove(guid);
+        pointToThing.remove(guidToPoint.remove(guid));
     }
 
     /**
@@ -113,25 +133,25 @@ public class BruteForceMap implements Map
      * @return an ArrayList of Things
      */
     @Override
-    public ArrayList<Thing> getThings(int x,int y,int distance)
+    public ArrayList<Thing> getThings(Point postion,int distance)
     {
-        ArrayList<Thing> things = new ArrayList<Thing>();
+        ArrayList<Thing> list = new ArrayList<Thing>();
 
-        for(int left = x-distance;left <= x+distance;left++)
+        for(int left = postion.x-distance;left <= postion.x+distance;left++)
         {
-            for(int top = y-distance;top <= y+distance;top++)
+            for(int top = postion.y-distance;top <= postion.y+distance;top++)
             {
-                if(Point.distance(x, y, left, top) <= distance)
+                if(Point.distance(postion.x, postion.y, left, top) <= distance)
                 {
-                    if(this.things.containsKey(new Point(left,top)))
+                    if(pointToThing.containsKey(new Point(left,top)))
                     {
-                        things.add(this.things.get(new Point(left,top)));
+                        list.add(pointToThing.get(new Point(left,top)));
                     }
                 }
             }
         }
 
-        return things;
+        return list;
     }
     
     /**
@@ -143,20 +163,18 @@ public class BruteForceMap implements Map
      * @return returns true if nothing was in the new point, false otherwise
      */
     @Override
-    public boolean move(Thing thing,int x,int y)
+    public boolean move(Thing thing,Point postion)
     {
-        Point newPoint = thing.getPosition();
-        newPoint.move(x, y);
+        Point newPoint = guidToPoint.get(thing.getGuid());
+        newPoint.move(postion.x, postion.y);
 
-        if(things.containsKey(newPoint))
+        if(pointToThing.containsKey(newPoint))
         {
             return false;
         }
 
-        things.remove(thing.getPosition());
-        thing.setPosition(newPoint);
-        updateBounds(thing.getPosition());
-        things.put(thing.getPosition(), thing);
+        removeThing(thing);
+        addThing(newPoint,thing);
         
         return true;
     }
@@ -202,5 +220,11 @@ public class BruteForceMap implements Map
         {
             lowerBound = y-10;
         }
+    }
+
+    @Override
+    public int generateGuid()
+    {
+        return nextGuid++;
     }
 }
