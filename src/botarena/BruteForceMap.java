@@ -26,6 +26,10 @@ public class BruteForceMap implements Map
     private BotArena master = null;
     private HashMap<Point, Thing> things = null;
     private Random rand = null;
+    private int upperBound = 0;
+    private int lowerBound = 0;
+    private int leftBound = 0;
+    private int rightBound = 0;
 
     BruteForceMap(BotArena master)
     {
@@ -43,6 +47,7 @@ public class BruteForceMap implements Map
 
         for(int x=0;x<things.size();x++)
         {
+            updateBounds(things.get(x).getPosition());
             this.things.put(things.get(x).getPosition(), things.get(x));
         }
     }
@@ -58,6 +63,7 @@ public class BruteForceMap implements Map
     @Override
     public boolean addThing(int x,int y,Thing thing)
     {
+        updateBounds(new Point(x,y));
         things.put(new Point(x,y), thing);
         return true;
     }
@@ -149,6 +155,7 @@ public class BruteForceMap implements Map
 
         things.remove(thing.getPosition());
         thing.setPosition(newPoint);
+        updateBounds(thing.getPosition());
         things.put(thing.getPosition(), thing);
         
         return true;
@@ -162,6 +169,38 @@ public class BruteForceMap implements Map
     @Override
     public Point randomPoint()
     {
-        return new Point(rand.nextInt(),rand.nextInt());
+        int x = leftBound + rand.nextInt(rightBound - leftBound);
+        int y = lowerBound + rand.nextInt(upperBound - lowerBound);
+        return new Point(x,y);
+    }
+
+    /**
+     * Checks if a Point is within the current bounds, and updates the bounds if
+     * needed.
+     *
+     * @param postion The Point to check
+     */
+    private void updateBounds(Point position)
+    {
+        int x = position.x;
+        int y = position.y;
+
+        if(x+10 > rightBound)
+        {
+            rightBound = x+10;
+        }
+        else if(x - 10 < leftBound)
+        {
+            leftBound = x-10;
+        }
+        
+        if(y+10 > upperBound)
+        {
+            upperBound = y+10;
+        }
+        else if(y - 10 < lowerBound)
+        {
+            lowerBound = y-10;
+        }
     }
 }
