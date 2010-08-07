@@ -73,35 +73,38 @@ public class Bot extends Thing
     @Override
     protected void step(Packet pkt)
     {
-        switch(pkt.getCommand())
+        if(pkt != null)
         {
-            // 0 - direction
-            case MOVE:
-                Point position = master.getMap().getPosition(this);
-                switch(Enum.valueOf(Direction.class, pkt.getParameter().get(0)))
-                {
-                    case UP:
-                        position.translate(0, 1);
-                        break;
-                    case DOWN:
-                        position.translate(0, -1);
-                        break;
-                    case LEFT:
-                        position.translate(-1, 0);
-                        break;
-                    case RIGHT:
-                        position.translate(1, 0);
-                        break;
-                }
-                master.moveThing(this, position);
-                break;
-            // 0 - spell
-            // 1 - direction
-            case FIRE:
-                Direction direction = Enum.valueOf(Direction.class, pkt.getParameter().get(1));
-                
-                master.addThing(this,new Projectile(master,"Bullet",10,direction),direction);
-                break;
+            switch(pkt.getCommand())
+            {
+                // 0 - direction
+                case MOVE:
+                    Point position = master.getMap().getPosition(this);
+                    switch(Enum.valueOf(Direction.class, pkt.getParameter().get(0)))
+                    {
+                        case UP:
+                            position.translate(0, 1);
+                            break;
+                        case DOWN:
+                            position.translate(0, -1);
+                            break;
+                        case LEFT:
+                            position.translate(-1, 0);
+                            break;
+                        case RIGHT:
+                            position.translate(1, 0);
+                            break;
+                    }
+                    master.moveThing(this, position);
+                    break;
+                // 0 - spell
+                // 1 - direction
+                case FIRE:
+                    Direction direction = Enum.valueOf(Direction.class, pkt.getParameter().get(1));
+
+                    master.addThing(this,new Projectile(master,"Bullet",10,direction),direction);
+                    break;
+            }
         }
 
         ArrayList<Thing> things = master.getMap().getThings(master.getMap().getPosition(this), radius);
