@@ -15,11 +15,15 @@ import botarena.util.Type;
  */
 public class Obstacle extends Thing
 {
+    private BotArena master;
     private String name;
+    private int hp;
 
-    public Obstacle(String name)
+    public Obstacle(BotArena master,String name,int hp)
     {
+        this.master = master;
         this.name = name;
+        this.hp = hp;
     }
 
     @Override
@@ -40,4 +44,22 @@ public class Obstacle extends Thing
         // do nothing...
     }
 
+    /**
+     * This function is called to damage this Obstacle
+     * @param dmg The amount of damage being dealt
+     * @return the amount of damage to do back
+     */
+    @Override
+    public int damage(int dmg)
+    {
+        if(hp > 0)
+        {
+            hp -= dmg;
+            if(hp < 1)
+            {
+                master.removeThing(this);
+            }
+        }
+        return 0;
+    }
 }
