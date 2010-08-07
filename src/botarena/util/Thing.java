@@ -84,7 +84,10 @@ public abstract class Thing
      * @return true if the collision still allows this Thing to move, false
      * otherwise
      */
-    abstract public boolean collideWith(Thing thing);
+    public boolean collideWith(Thing thing)
+    {
+        return false;
+    }
 
     /**
      * This function is called to damage this Thing
