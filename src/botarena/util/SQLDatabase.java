@@ -139,7 +139,7 @@ public abstract class SQLDatabase implements Database
         ArrayList<String> bots = new ArrayList<String>();
         ResultSet rs = null;
         
-        rs = execute("SELECT name FROM thing WHERE type='BOT' AND username='"+username+"'");
+        rs = execute("SELECT name FROM bot WHERE uid=(SELECT uid FROM user WHERE username='"+username+"')");
         
         try
         {
@@ -174,7 +174,7 @@ public abstract class SQLDatabase implements Database
         Bot bot = null;
         ResultSet rs = null;
 
-        rs = execute("SELECT * FROM thing WHERE type='BOT' AND name='"+name+"'");
+        rs = execute("SELECT * FROM bot WHERE name='"+name+"'");
 
         try
         {
@@ -241,37 +241,74 @@ public abstract class SQLDatabase implements Database
     public void createTables()
     {
     	String query =
-            "CREATE TABLE user (" +
-            "	username varchar(16) primary key," +
-            "	password varchar(16)," +
-            "	uid int" +
-            ");" +
-            "CREATE TABLE thing (" +
-            "	tid int primary key," +
-            "	username varchar(16)," +
-            "	name varchar(16)," +
-            "	type varchar(16)," +
-            "	x int," +
-            "	y int" +
-            ");" +
-            "INSERT INTO user ( username, password, uid ) VALUES" +
-            "( 'map', 'map', 0 );" +
-            "INSERT INTO user ( username, password, uid ) VALUES" +
-            "( 'test', 'test', 1 );" +
-            "INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-            "( 1000, 'map', 'Tree1', 'OBSTACLE', 3, 3 );" +
-            "INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-            "( 1001, 'map', 'Wall1', 'WALL', 0, 2 );" +
-            "INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-            "( 1002, 'map', 'Wall2', 'WALL', 1, 2 );" +
-            "INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-            "( 1003, 'map', 'Wall3', 'WALL', 2, 2 );" +
-            "INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-            "( 1004, 'map', 'Wall4', 'WALL', 3, 2 );" +
-            "INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-            "( 1005, 'map', 'Wall5', 'WALL', 4, 2 );" +
-            "INSERT INTO thing ( tid, name, type, x, y ) VALUES" +
-            "( 1006, 'map', 'Wall6', 'WALL', 5, 2 );";
+            "SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO';"+
+
+            "CREATE TABLE `bot` ("+
+            "  `bid` int(11) NOT NULL AUTO_INCREMENT,"+
+            "  `uid` int(11) NOT NULL,"+
+            "  `name` varchar(64) NOT NULL,"+
+            "  `level` int(11) NOT NULL,"+
+            "  `weapon1` int(11) NOT NULL,"+
+            "  `weapon2` int(11) NOT NULL,"+
+            "  `armor_front` int(11) NOT NULL,"+
+            "  `armor_back` int(11) NOT NULL,"+
+            "  `armor_left` int(11) NOT NULL,"+
+            "  `armor_right` int(11) NOT NULL,"+
+            "  `engine` int(11) NOT NULL,"+
+            "  PRIMARY KEY (`bid`),"+
+            "  KEY `uid` (`uid`)"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+
+            "CREATE TABLE `item` ("+
+            "  `iid` int(11) NOT NULL AUTO_INCREMENT,"+
+            "  `name` varchar(64) NOT NULL,"+
+            "  `type` enum('WEAPON','ARMOR','ENGINE') NOT NULL,"+
+            "  PRIMARY KEY (`iid`)"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+
+            "CREATE TABLE `map` ("+
+            "  `guid` int(11) NOT NULL,"+
+            "  `type` enum('OBSTACLE','NPC') NOT NULL,"+
+            "  `id` int(11) NOT NULL,"+
+            "  `x` int(11) NOT NULL,"+
+            "  `y` int(11) NOT NULL,"+
+            "  PRIMARY KEY (`guid`)"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1;"+
+
+            "CREATE TABLE `npc` ("+
+            "  `nid` int(11) NOT NULL AUTO_INCREMENT,"+
+            "  `name` varchar(64) NOT NULL,"+
+            "  `level` int(11) NOT NULL,"+
+            "  `weapon1` int(11) NOT NULL,"+
+            "  `weapon2` int(11) NOT NULL,"+
+            "  `armor_front` int(11) NOT NULL,"+
+            "  `armor_back` int(11) NOT NULL,"+
+            "  `armor_left` int(11) NOT NULL,"+
+            "  `armor_right` int(11) NOT NULL,"+
+            "  `engine` int(11) NOT NULL,"+
+            "  PRIMARY KEY (`nid`)"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+
+            "CREATE TABLE `obstacle` ("+
+            "  `oid` int(11) NOT NULL AUTO_INCREMENT,"+
+            "  `name` varchar(64) NOT NULL,"+
+            "  PRIMARY KEY (`oid`)"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+
+            "CREATE TABLE `projectile` ("+
+            "  `pid` int(11) NOT NULL AUTO_INCREMENT,"+
+            "  `name` varchar(64) NOT NULL,"+
+            "  `damage` int(11) NOT NULL,"+
+            "  `range` int(11) NOT NULL,"+
+            "  PRIMARY KEY (`pid`)"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+
+            "CREATE TABLE `user` ("+
+            "  `uid` int(11) NOT NULL AUTO_INCREMENT,"+
+            "  `username` varchar(64) NOT NULL,"+
+            "  `password` varchar(64) NOT NULL,"+
+            "  PRIMARY KEY (`uid`)"+
+            ") ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";
 
         execute(query);
     }
