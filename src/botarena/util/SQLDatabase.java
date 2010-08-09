@@ -36,20 +36,14 @@ public abstract class SQLDatabase implements Database
         try
         {
             conn = getConnection(Config.getConfig("dbHost"),
+                    Config.getConfig("dbDb"),
                     Config.getConfig("dbUser"),
-                    Config.getConfig("dbPassword"),
-                    Config.getConfig("dbDB"));
-        }
-        catch(SQLException ex)
-        {
-            System.out.println("SQLException: " + ex.getMessage());
-            System.out.println("SQLState: " + ex.getSQLState());
-            System.out.println("VendorError: " + ex.getErrorCode());
-            Debug.printex(ex);
+                    Config.getConfig("dbPass"));
         }
         catch(Exception ex)
         {
             Debug.printex(ex);
+            Runtime.getRuntime().exit(0);
         }
     }
 
@@ -84,7 +78,15 @@ public abstract class SQLDatabase implements Database
         try
         {
             stmt = conn.createStatement();
-            return stmt.executeQuery(query);
+
+            if(stmt.execute(query))
+            {
+                return stmt.getResultSet();
+            }
+            else
+            {
+                return null;
+            }
         }
         catch(SQLException ex)
         {

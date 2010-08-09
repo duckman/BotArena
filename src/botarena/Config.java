@@ -50,7 +50,7 @@ public class Config
         catch(FileNotFoundException ex)
         {
             // set defaults
-            conf.put("dbEngine", "SQLite");
+            conf.put("dbEngine", "botarena.MySQL");
             conf.put("dbHost", "localhost");
             conf.put("dbUser", "botarena");
             conf.put("dbPass", "botarena");
@@ -79,7 +79,7 @@ public class Config
     public static String getConfig(String key)
     {
         isLoaded();
-
+        
         return conf.get(key);
     }
 }

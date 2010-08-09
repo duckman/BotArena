@@ -35,7 +35,8 @@ public class MySQL extends SQLDatabase
     @Override
     protected Connection getConnection(String host, String database, String username,
                     String password) throws InstantiationException,
-                    IllegalAccessException, ClassNotFoundException, SQLException {
+                    IllegalAccessException, ClassNotFoundException, SQLException
+    {
             Class.forName("com.mysql.jdbc.Driver").newInstance();
             return DriverManager.getConnection("jdbc:mysql://"+host+"/"+database+"?user="+username+"&password="+password);
     }
