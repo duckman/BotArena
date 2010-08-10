@@ -241,8 +241,6 @@ public abstract class SQLDatabase implements Database
     public void createTables()
     {
     	String query =
-            "SET SQL_MODE='NO_AUTO_VALUE_ON_ZERO';"+
-
             "CREATE TABLE `bot` ("+
             "  `bid` int(11) NOT NULL AUTO_INCREMENT,"+
             "  `uid` int(11) NOT NULL,"+
@@ -257,14 +255,14 @@ public abstract class SQLDatabase implements Database
             "  `engine` int(11) NOT NULL,"+
             "  PRIMARY KEY (`bid`),"+
             "  KEY `uid` (`uid`)"+
-            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 ;"+
 
             "CREATE TABLE `item` ("+
             "  `iid` int(11) NOT NULL AUTO_INCREMENT,"+
             "  `name` varchar(64) NOT NULL,"+
             "  `type` enum('WEAPON','ARMOR','ENGINE') NOT NULL,"+
             "  PRIMARY KEY (`iid`)"+
-            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 ;"+
 
             "CREATE TABLE `map` ("+
             "  `guid` int(11) NOT NULL,"+
@@ -287,13 +285,13 @@ public abstract class SQLDatabase implements Database
             "  `armor_right` int(11) NOT NULL,"+
             "  `engine` int(11) NOT NULL,"+
             "  PRIMARY KEY (`nid`)"+
-            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 ;"+
 
             "CREATE TABLE `obstacle` ("+
             "  `oid` int(11) NOT NULL AUTO_INCREMENT,"+
             "  `name` varchar(64) NOT NULL,"+
             "  PRIMARY KEY (`oid`)"+
-            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 ;"+
 
             "CREATE TABLE `projectile` ("+
             "  `pid` int(11) NOT NULL AUTO_INCREMENT,"+
@@ -301,14 +299,14 @@ public abstract class SQLDatabase implements Database
             "  `damage` int(11) NOT NULL,"+
             "  `range` int(11) NOT NULL,"+
             "  PRIMARY KEY (`pid`)"+
-            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;"+
+            ") ENGINE=MyISAM DEFAULT CHARSET=latin1 ;"+
 
             "CREATE TABLE `user` ("+
             "  `uid` int(11) NOT NULL AUTO_INCREMENT,"+
             "  `username` varchar(64) NOT NULL,"+
             "  `password` varchar(64) NOT NULL,"+
             "  PRIMARY KEY (`uid`)"+
-            ") ENGINE=MyISAM  DEFAULT CHARSET=latin1 AUTO_INCREMENT=1 ;";
+            ") ENGINE=MyISAM  DEFAULT CHARSET=latin1 ;";
 
         execute(query);
     }
