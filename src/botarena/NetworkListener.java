@@ -44,7 +44,7 @@ public class NetworkListener implements Runnable
         {
             try
             {
-                new Thread(new ClientSocket(master,serverSocket.accept())).start();
+                new Thread(new Bot(master,serverSocket.accept())).start();
             }
             catch(SocketException ex)
             {

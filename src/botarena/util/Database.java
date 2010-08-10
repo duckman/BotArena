@@ -5,9 +5,6 @@
 
 package botarena.util;
 
-import botarena.Bot;
-import botarena.BotArena;
-import botarena.ClientSocket;
 import java.util.ArrayList;
 
 /**
@@ -55,5 +52,5 @@ public interface Database
      * @param name the Bot to load
      * @return The Bot ready to go
      */
-    public Bot loadBot(BotArena master,ClientSocket socket,String name);
+    public String loadBot(String name);
 }

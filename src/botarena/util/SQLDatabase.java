@@ -5,11 +5,7 @@
 
 package botarena.util;
 
-import botarena.Bot;
-import botarena.BotArena;
-import botarena.ClientSocket;
 import botarena.Config;
-import java.awt.Point;
 import java.sql.Statement;
 import java.sql.Connection;
 import java.sql.ResultSet;
@@ -169,12 +165,12 @@ public abstract class SQLDatabase implements Database
      * @return A instantiated Bot ready to do battle
      */
     @Override
-    public Bot loadBot(BotArena master,ClientSocket socket,String name)
+    public String loadBot(String name)
     {
-        Bot bot = null;
+        String bot = null;
         ResultSet rs = null;
 
-        rs = execute("SELECT * FROM bot WHERE name='"+name+"'");
+        rs = execute("SELECT * FROM bot WHERE name='"+name+"' LIMIT 1");
 
         try
         {
@@ -182,7 +178,7 @@ public abstract class SQLDatabase implements Database
             {
                 do
                 {
-                    bot = new Bot(master,socket,name);
+                    bot = rs.getString("name")+":BOT";
                 }
                 while(rs.next());
             }
